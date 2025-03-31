@@ -53,8 +53,67 @@ enemyNames.Add("Zombie"); // Không được thêm vào
 |Thứ tự phần tử|Không đảm bảo|Được đảm bảo|
 |Tốc độ thêm/xóa|Nhanh|Chậm hơn (đặc biệt khi xóa)|
 
-==> Tóm lại: `HashSet` là sự lựa chọn tuyệt vời khi bạn cần lưu trữ các phần tử duy nhất và thường xuyên kiểm tra sự tồn tại của phần tử
+==> Tóm lại: `HashSet là sự lựa chọn tuyệt vời khi bạn cần lưu trữ các phần tử duy nhất và thường xuyên kiểm tra sự tồn tại của phần tử`
 ## 3. `Dictionary`
+- Là cấu trúc dữ liệu cho phép lưu trữ dữ liệu theo dạng cặp `key-value` với hiệu suất truy xuất cao
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-9.0)
+
+```csharp
+using System.Collections.Generic;
+
+// Khởi tạo Dictionary cơ bản
+Dictionary<string, int> playerScores = new Dictionary<string, int>();
+
+// Khởi tạo với giá trị ban đầu
+Dictionary<string, string> weaponTypes = new Dictionary<string, string>() {
+    {"sword", "melee"},
+    {"bow", "ranged"},
+    {"staff", "magic"}
+};
+```
+```csharp
+playerScores.Add("Player1", 100);
+playerScores.Add("Player2", 150);
+
+// Hoặc sử dụng indexer
+playerScores["Player3"] = 200;
+
+int score = playerScores["Player1"]; // Lấy giá trị
+
+// Kiểm tra tồn tại key trước khi truy cập
+if (playerScores.ContainsKey("Player2")) {
+    Debug.Log("Score của Player2: " + playerScores["Player2"]);
+}
+```
+### 3.1 Ưu điểm 
+- Truy xuất nhanh: Độ phức tạp O(1) cho các thao tác tìm kiếm, thêm, xóa
+- Tổ chức linh hoạt: Dễ dàng ánh xạ giữa các đối tượng game
+- Hiệu suất cao: Lý tưởng cho hệ thống truy câp nhanh như inventory, player data, ...
+### 3.2 Lưu ý quan trọng
+- Key phải là duy nhất: Mỗi key chỉ xuất hiện một lần trong Dictionary
+- Key không được null: Sẽ gây ra exception nếu cố gắng sử dụng null key
+- Kiểm tra tồn tại: Luôn kiểm tra ContainsKey trước khi truy cập để tránh KeyNotFoundException
+- Hiệu suất: Dictionary chiếm nhiều bộ nhớ hơn List/Array nhưng truy xuất nhanh hơn
+### 3.3 So sánh với các cấu trúc khác
+| Tính năng               | Dictionary<TKey,TValue> | List<T>          | Array (T[])      | HashSet<T>       |
+|-------------------------|------------------------|------------------|------------------|------------------|
+| **Truy cập bằng key**    | ✅ O(1)                | ❌ Không hỗ trợ  | ❌ Không hỗ trợ  | ❌ Chỉ kiểm tra tồn tại |
+| **Truy cập bằng index**  | ❌ Không hỗ trợ        | ✅ O(1)          | ✅ O(1)          | ❌ Không hỗ trợ  |
+| **Tìm kiếm phần tử**     | ✅ O(1) (by key)       | ⚠️ O(n)         | ⚠️ O(n)         | ✅ O(1)          |
+| **Thêm phần tử**         | ✅ O(1)                | ✅ O(1)*         | ❌ Kích thước cố định | ✅ O(1)          |
+| **Xóa phần tử**          | ✅ O(1)                | ⚠️ O(n)         | ❌ Không hỗ trợ  | ✅ O(1)          |
+| **Lưu trữ key-value**    | ✅ Có                  | ❌ Không         | ❌ Không         | ❌ Chỉ lưu giá trị |
+| **Cho phép trùng lặp**   | ❌ Key phải duy nhất   | ✅ Có            | ✅ Có            | ❌ Giá trị duy nhất |
+| **Bảo toàn thứ tự**      | ❌ Không đảm bảo       | ✅ Có            | ✅ Có            | ❌ Không đảm bảo |
+| **Tốt cho**              | Tra cứu nhanh bằng key | Danh sách có thứ tự | Dữ liệu cố định | Kiểm tra tồn tại nhanh |
+
+*Ghi chú: 
+- ✅ = Hỗ trợ tốt 
+- ⚠️ = Có thể chậm với dữ liệu lớn 
+- ❌ = Không hỗ trợ
+- O(1)* với List: O(1) nếu Capacity chưa đầy, O(n) khi cần mở rộng
+
+==> Tóm lại: `Dictionary là công cụ mạnh mẽ để quản lý dữ liệu trong Unity, đặc biệt khi bạn cần ánh xạ giữa các định danh và giá trị với hiệu suất cao.`
 ## 4. `Queue`
 ## 5. `Stack`
 ## 6. `LinkedList`
