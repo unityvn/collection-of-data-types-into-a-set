@@ -28,7 +28,7 @@ Debug.Log(players[1]); // Bob
  
 
 ## 2. `HashSet`
-- HashSet rất hữu ích khi bạn cần lưu các phần tử duy nhất và thực hiện các tháo tác tập hợp hiệu quả
+- HashSet rất hữu ích khi bạn cần lưu các phần tử duy nhất và thực hiện các tháo tác tập hợp hiệu quả [Read more](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1?view=net-9.0)
 
 ```csharp
 HashSet<string> enemyNames = new HashSet<string>();
