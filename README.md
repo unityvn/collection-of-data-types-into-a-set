@@ -5,6 +5,7 @@
 - Có kích thước cố định
 - Truy cập phần tử nhanh (O(1))
 - Không có sẵn phương thức thêm/xoá phần tử
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.array?view=net-9.0)
 ```csharp
 int[] numbers = new int[3] { 1, 2, 3 };
 Debug.Log(numbers[0]); // 1
@@ -13,7 +14,7 @@ Debug.Log(numbers[0]); // 1
 - Kích thước linh hoạt
 - Thêm/xoá các phần tử dễ dàng
 - Tìm kiếm phần tử chậm hơn HashSet.
-
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.array?view=net-9.0)
 ```csharp
 List<string> players = new List<string>() { "Alice", "Bob" };
 players.Add("Charlie");
@@ -28,7 +29,8 @@ Debug.Log(players[1]); // Bob
  
 
 ## 2. `HashSet`
-- HashSet rất hữu ích khi bạn cần lưu các phần tử duy nhất và thực hiện các tháo tác tập hợp hiệu quả [Read more](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1?view=net-9.0)
+- HashSet rất hữu ích khi bạn cần lưu các phần tử duy nhất và thực hiện các tháo tác tập hợp hiệu quả
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1?view=net-9.0)
 
 ```csharp
 HashSet<string> enemyNames = new HashSet<string>();
