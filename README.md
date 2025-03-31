@@ -1,4 +1,4 @@
-# Tổng hợp các kiểu dữ liệu dạng tập hợp
+# Tổng hợp các lưu ý về kiểu dữ liệu dạng tập hợp
 ## 1. `Array` và `List`
 - Array và List đều là những kiểu dữ liệu được sử dụng nhiều và phổ biến
 ### 1.1. Array
