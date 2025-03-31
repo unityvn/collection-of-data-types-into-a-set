@@ -28,6 +28,30 @@ Debug.Log(players[1]); // Bob
  
 
 ## 2. `HashSet`
+- HashSet rất hữu ích khi bạn cần lưu các phần tử duy nhất và thực hiện các tháo tác tập hợp hiệu quả
+
+```csharp
+HashSet<string> enemyNames = new HashSet<string>();
+
+enemyNames.Add("Zombie");
+enemyNames.Add("Skeleton");
+enemyNames.Add("Orc");
+
+// Thêm phần tử trùng lặp sẽ không có tác dụng
+enemyNames.Add("Zombie"); // Không được thêm vào
+```
+### 2.1 Ưu điểm của HashSet
+- Hiệu suất cao: Các thao tác Contains, Add, Remove có độ phức tạp O(1)
+- Tự động loại bỏ trùng lặp: Đảm bảo mọi phần tử là duy nhất
+### 2.2 So sánh với List
+|Tính năng|HashSet|List|
+|:--------|:------|:---|
+|Tốc độ tìm kiếm|O(1)|O(n)|
+|Cho phép trùng lặp|Không|Có|
+|Thứ tự phần tử|Không đảm bảo|Được đảm bảo|
+|Tốc độ thêm/xóa|Nhanh|Chậm hơn (đặc biệt khi xóa)|
+
+==> Tóm lại: `HashSet` là sự lựa chọn tuyệt vời khi bạn cần lưu trữ các phần tử duy nhất và thường xuyên kiểm tra sự tồn tại của phần tử
 ## 3. `Dictionary`
 ## 4. `Queue`
 ## 5. `Stack`
