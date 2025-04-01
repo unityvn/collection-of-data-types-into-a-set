@@ -115,5 +115,167 @@ if (playerScores.ContainsKey("Player2")) {
 
 ==> Tóm lại: `Dictionary là công cụ mạnh mẽ để quản lý dữ liệu trong Unity, đặc biệt khi bạn cần ánh xạ giữa các định danh và giá trị với hiệu suất cao.`
 ## 4. `Queue`
+- Queue là cấu trúc dữ liệu hàng đợi (FIFO - First In First Out), nghĩa là phần tử nào được thêm vào trước thì sẽ được lấy ra trước. Nó hữu ích khi bạn cần quản lý một danh sách các hành động, sự kiện hoặc nhiệm vụ cần xử lý theo thứ tự.
+```csharp
+Queue<int> queue = new Queue<int>(); // Khởi tạo queue chứa số nguyên
+
+void Add(){
+    queue.Enqueue(1);
+    queue.Enqueue(2);
+    queue.Enqueue(3);
+}
+
+int Get(){
+    int firstElement = queue.Dequeue(); // Lấy ra 1 và xóa khỏi hàng đợi
+    return firstElement; // kết quả trả về bằng 1
+}
+
+int Peek(){
+    int front = queue.Peek(); // Xem phần tử đầu tiên nhưng không xóa
+    return front
+}
+```
+### Ví dụ sử dụng Queue để quản lý nhiệm vụ trong game
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TaskManager : MonoBehaviour
+{
+    Queue<string> taskQueue = new Queue<string>();
+
+    void Start()
+    {
+        // Thêm nhiệm vụ vào hàng đợi
+        taskQueue.Enqueue("Nhặt vũ khí");
+        taskQueue.Enqueue("Tấn công kẻ địch");
+        taskQueue.Enqueue("Thu thập vật phẩm");
+
+        StartCoroutine(ProcessTasks());
+    }
+
+    IEnumerator ProcessTasks()
+    {
+        while (taskQueue.Count > 0)
+        {
+            string currentTask = taskQueue.Dequeue();
+            Debug.Log("Thực hiện nhiệm vụ: " + currentTask);
+            yield return new WaitForSeconds(2); // Giả lập thời gian thực hiện nhiệm vụ
+        }
+
+        Debug.Log("Hoàn thành tất cả nhiệm vụ!");
+    }
+}
+
+```
+📌 Giải thích:
+- Danh sách nhiệm vụ được quản lý bằng Queue.
+- Dùng Coroutine để thực hiện nhiệm vụ tuần tự (mỗi nhiệm vụ mất 2 giây).
+- Khi taskQueue.Count == 0, tất cả nhiệm vụ đã hoàn thành.
+
+### Khi nào ta nên dùng Queue trong unity?
+- Quản lý danh sách nhiệm vụ tuần tự (như AI, NPC thực hiện hành động theo thứ tự).
+- Xử lý hàng đợi sự kiện (như log chat, thông báo hệ thống).
+- Tạo hệ thống Pooling (quản lý đối tượng tái sử dụng để tối ưu hiệu năng).
+- Tính toán đường đi AI (bằng BFS - Breadth First Search).
+
 ## 5. `Stack`
+- Stack là cấu trúc dữ liệu ngăn xếp (LIFO - Last In First Out), tức là phần tử nào được thêm vào sau sẽ được lấy ra trước. Nó thích hợp sử dụng để quản lý các trạng thái, hệ thống Undo/Redo hoặc giải quyết bài toán đệ quy.
+```csharp
+Stack<int> stack = new Stack<int>(); // Khởi tạo stack chứa số nguyên
+
+void Push(){
+    stack.Push(10);
+    stack.Push(20);
+    stack.Push(30);
+}
+
+int Pop(){
+    int lastElement = stack.Pop(); // Lấy ra 30 và xóa khỏi stack
+    return lastElement;
+}
+
+int Peek(){
+    int topElement = stack.Peek(); // Xem phần tử trên cùng nhưng không xóa
+    return topElement;
+}
+```
+### Ví dụ về hệ thống Undo/Redo bằng Stack
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UndoRedoManager : MonoBehaviour
+{
+    Stack<string> undoStack = new Stack<string>();
+    Stack<string> redoStack = new Stack<string>();
+
+    void Start()
+    {
+        PerformAction("Di chuyển lên");
+        PerformAction("Di chuyển phải");
+        PerformAction("Tấn công");
+
+        Undo();
+        Undo();
+        Redo();
+    }
+
+    void PerformAction(string action)
+    {
+        undoStack.Push(action);
+        redoStack.Clear(); // Khi thực hiện hành động mới, không thể Redo nữa
+        Debug.Log("Hành động: " + action);
+    }
+
+    void Undo()
+    {
+        if (undoStack.Count > 0)
+        {
+            string lastAction = undoStack.Pop();
+            redoStack.Push(lastAction);
+            Debug.Log("Undo: " + lastAction);
+        }
+        else
+        {
+            Debug.Log("Không thể Undo!");
+        }
+    }
+
+    void Redo()
+    {
+        if (redoStack.Count > 0)
+        {
+            string lastUndoneAction = redoStack.Pop();
+            undoStack.Push(lastUndoneAction);
+            Debug.Log("Redo: " + lastUndoneAction);
+        }
+        else
+        {
+            Debug.Log("Không thể Redo!");
+        }
+    }
+}
+
+```
+📌 Giải thích:
+- undoStack lưu trữ các hành động đã thực hiện.
+- redoStack lưu trữ các hành động đã Undo để có thể Redo.
+- Khi thực hiện hành động mới, redoStack bị xóa để tránh Redo lỗi.
+
+### So sánh Stack và Queue
+
+| Đặc điểm  | `Stack<T>` (LIFO) | `Queue<T>` (FIFO) |
+|-----------|------------------|------------------|
+| **Cách hoạt động** | Lấy phần tử cuối cùng trước | Lấy phần tử đầu tiên trước |
+| **Phương thức chính** | `Push()`, `Pop()`, `Peek()` | `Enqueue()`, `Dequeue()`, `Peek()` |
+| **Ứng dụng** | Hệ thống Undo/Redo, đệ quy, duyệt cây | Quản lý hàng đợi, xử lý nhiệm vụ tuần tự |
+
+### Khi nào nên dùng Stack trong unity?
+- Hệ thống Undo/Redo (ví dụ: chỉnh sửa bản đồ, hành động nhân vật).
+- Duyệt cây đệ quy (DFS - Depth First Search).
+- Hệ thống xử lý trạng thái nhân vật (State Machine).
+- Quản lý lịch sử hành động của AI.
 ## 6. `LinkedList`
