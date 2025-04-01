@@ -116,6 +116,7 @@ if (playerScores.ContainsKey("Player2")) {
 ==> Tóm lại: `Dictionary là công cụ mạnh mẽ để quản lý dữ liệu trong Unity, đặc biệt khi bạn cần ánh xạ giữa các định danh và giá trị với hiệu suất cao.`
 ## 4. `Queue`
 - Queue là cấu trúc dữ liệu hàng đợi (FIFO - First In First Out), nghĩa là phần tử nào được thêm vào trước thì sẽ được lấy ra trước. Nó hữu ích khi bạn cần quản lý một danh sách các hành động, sự kiện hoặc nhiệm vụ cần xử lý theo thứ tự.
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.queue-1?view=net-9.0)
 ```csharp
 Queue<int> queue = new Queue<int>(); // Khởi tạo queue chứa số nguyên
 
@@ -182,6 +183,7 @@ public class TaskManager : MonoBehaviour
 
 ## 5. `Stack`
 - Stack là cấu trúc dữ liệu ngăn xếp (LIFO - Last In First Out), tức là phần tử nào được thêm vào sau sẽ được lấy ra trước. Nó thích hợp sử dụng để quản lý các trạng thái, hệ thống Undo/Redo hoặc giải quyết bài toán đệ quy.
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.collections.stack?view=net-9.0)
 ```csharp
 Stack<int> stack = new Stack<int>(); // Khởi tạo stack chứa số nguyên
 
@@ -279,3 +281,71 @@ public class UndoRedoManager : MonoBehaviour
 - Hệ thống xử lý trạng thái nhân vật (State Machine).
 - Quản lý lịch sử hành động của AI.
 ## 6. `LinkedList`
+- Là một cấu trúc dữ liệu giúp quản lý danh sách liên kết 2 chiều
+- [Read more docs](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1?view=net-9.0)
+
+### Thêm phần tử
+- Có nhiều cách để thêm phần tử
+```csharp
+LinkedList<int> numbers = new LinkedList<int>();
+
+// Thêm vào đầu danh sách
+numbers.AddFirst(10);
+
+// Thêm vào cuối danh sách
+numbers.AddLast(20);
+
+// Thêm một phần tử sau một node cụ thể
+LinkedListNode<int> node = numbers.AddLast(30); 
+numbers.AddAfter(node, 40);
+
+// Thêm một phần tử trước một node cụ thể
+numbers.AddBefore(node, 25);
+```
+### Duyệt LinkedList
+- Sử dụng foreach
+```csharp
+foreach (int number in numbers)
+{
+    Debug.Log(number);
+}
+```
+- Sử dụng while thông qua LinkedListNode<T>
+```csharp
+LinkedListNode<int> current = numbers.First;
+while (current != null)
+{
+    Debug.Log(current.Value);
+    current = current.Next;
+}
+```
+
+### Xóa phần tử
+- Có nhiều cách để xóa phần tử
+```csharp
+numbers.Remove(25); // Xóa giá trị cụ thể
+numbers.RemoveFirst(); // Xóa phần tử đầu tiên
+numbers.RemoveLast(); // Xóa phần tử cuối cùng
+numbers.Clear(); // Xóa toàn bộ danh sách
+```
+### Ứng dụng LinkedList trong Unity
+- Quản lý danh sách hành động của AI (các hành động liên tục như di chuyển, tấn công).
+- Quản lý đối tượng trong game (danh sách quái vật, đạn trong game bắn súng, checkpoint).
+- Triển khai Undo/Redo (lịch sử thao tác của người chơi).
+
+### Khi nào nên dùng LinkedList thay vì List?
+
+| **Tiêu chí**        | **List<T>**  | **LinkedList<T>** |
+|---------------------|-------------|------------------|
+| **Thêm/Xóa ở giữa** | Chậm (O(n)) | Nhanh (O(1)) |
+| **Truy cập phần tử** | Nhanh (O(1)) | Chậm (O(n)) |
+| **Duyệt danh sách** | Nhanh | Trung bình |
+| **Bộ nhớ sử dụng** | Ít hơn | Nhiều hơn (do lưu Node) |
+
+- Dùng List<T> nếu bạn cần truy cập phần tử nhanh bằng index.
+- Dùng LinkedList<T> nếu bạn cần thêm/xóa phần tử thường xuyên ở giữa danh sách.
+
+### Kết luận
+- LinkedList hữu ích khi cần thêm/xóa phần tử nhanh ở giữa danh sách.
+- Tuy nhiên, nó tốn bộ nhớ hơn so với List<T>.
+- Trong Unity, nên dùng cho các hệ thống hàng đợi, undo/redo, hoặc quản lý pool đối tượng.
